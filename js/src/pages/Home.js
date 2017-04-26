@@ -2,7 +2,7 @@ import ATV from 'atvjs';
 
 import { getPath } from '../common/fetch';
 
-export const url = getPath('videos');
+export const url = `${getPath('videos')}&limit=10`;
 
 export const template = data => {
     console.log('data', data);
@@ -13,11 +13,14 @@ export const template = data => {
                     <title>Home</title>
                 </banner>
                 <collectionList>
-                    <grid>
+                    <shelf>
+                        <header>
+                            <title>Latest Videos</title>
+                        </header>
                         <section>
                             ${data.map(ItemTile).join('')}
                         </section>
-                    </grid>
+                    </shelf>
                 </collectionList>
             </stackTemplate>
         </document>
@@ -37,7 +40,6 @@ const ItemTile = item => {
 
 export const data = response => {
     const results = ATV._.get(response, 'results', []);
-    console.log('results', results);
 
     return results.map(result => {
         const item = {
