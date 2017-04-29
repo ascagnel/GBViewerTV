@@ -1,9 +1,7 @@
 import ATV from 'atvjs';
-import { apiKey } from '../API_KEY';
-console.log('apiKey', apiKey);
 
 export const getPath = resource => {
-    console.log('apiKey', apiKey);
+    const apiKey = ATV.Settings.get('apiKey');
     return `https://www.giantbomb.com/api/${resource}?api_key=${apiKey}&format=json`;
 };
 
