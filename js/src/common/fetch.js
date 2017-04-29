@@ -1,3 +1,4 @@
+import ATV from 'atvjs';
 import { apiKey } from '../API_KEY';
 console.log('apiKey', apiKey);
 
@@ -6,17 +7,18 @@ export const getPath = resource => {
     return `https://www.giantbomb.com/api/${resource}?api_key=${apiKey}&format=json`;
 };
 
-export default (resource = 'videos') => {
-    const path = getPath(resource);
-    console.log('path', path);
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', path, true);
-        xhr.send();
+export const prepareUrl = input => {
+    if (input.indexOf('?') === -1 && input.indexOf('apiKey=') === -1) {
+        input = `${input}?api_key=${ATV.Settings.get('apiKey')}`;
+    }
 
-        const resonse = JSON.parse(xhr.response);
-        console.log('response', response);
-        resolve(response);
-    });
+    if (input.indexOf('api_key=') === -1) {
+        input = `${input}&api_key=${ATV.Settings.get('apiKey')}`;
+    }
 
+    if (input.indexOf('format=') === -1) {
+        input = `${input}&format=json`;
+    }
+
+    return input;
 };

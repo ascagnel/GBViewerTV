@@ -2,38 +2,35 @@ import ATV from 'atvjs';
 
 import { getPath } from '../common/fetch';
 
-export const url = `${getPath('videos')}&limit=10`;
+export const url = `${getPath('videos')}&limit=22`;
 
-export const template = data => {
-    console.log('data', data);
-    return `
-        <document>
-            <stackTemplate>
-                <banner>
-                    <title>Home</title>
-                </banner>
-                <collectionList>
-                    <shelf>
-                        <header>
-                            <title>Latest Videos</title>
-                        </header>
-                        <section>
-                            ${data.map(ItemTile).join('')}
-                        </section>
-                    </shelf>
-                </collectionList>
-            </stackTemplate>
-        </document>
-    `;
-};
+export const template = data => `
+    <document>
+        <stackTemplate>
+            <banner>
+                <title>Home</title>
+            </banner>
+            <collectionList>
+                <grid>
+                    <header>
+                        <title>Latest Videos</title>
+                    </header>
+                    <section>
+                        ${data.latest.map(ItemTile).join('')}
+                    </section>
+                </grid>
+            </collectionList>
+        </stackTemplate>
+    </document>
+`;
 
 export const name = 'home';
 
 const ItemTile = item => {
     return `
-        <lockup>
+        <lockup data-href-page="video" data-href-page-options='{ "detailUrl": "${item.detailUrl}" }'>
+            <img src="${item.image}" width="340" height="192" />
             <title>${item.name}</title>
-            <img src=${item.image} />
         </lockup>
     `;
 };
@@ -41,8 +38,9 @@ const ItemTile = item => {
 export const data = response => {
     const results = ATV._.get(response, 'results', []);
 
-    return results.map(result => {
+    const latest = results.map(result => {
         const item = {
+            detailUrl: ATV._.get(result, 'api_detail_url'),
             name: result.name,
             description: result.deck,
             image: ATV._.get(result, 'image.screen_url')
@@ -58,9 +56,9 @@ export const data = response => {
 
         return item;
     });
+
+    return { latest };
 };
 
 const config = { template, name, data, url };
-ATV.Page.create(config);
-
-export default config
+export default ATV.Page.create(config);

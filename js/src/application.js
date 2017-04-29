@@ -1,16 +1,40 @@
 import ATV from 'atvjs';
 
-import home from './pages/Home';
-import mainMenu from './pages/MainMenu';
+import Home from './pages/Home';
+import Loader from './pages/Loading';
+import Video from './pages/Video';
+import { template as loaderTemplate } from './pages/Loading';
 
-ATV.Navigation.navigate(home.name);
-/*
-App.onLaunch = function(options) {
-    const templateParser = new DOMParser();
-    const parsedTemplates = templates.map(template => {
-        debugger;
-        templateParser.parseFromString(template(), "application/xml");
-    });
-    navigationDocument.pushDocument(parsedTemplates[0]);
-}
-*/
+const errorTpl = (data) => {
+    console.log('errorTpl data', data);
+    return `
+        <document>
+            <descriptiveAlertTemplate>
+                <title>${data.title}</title>
+                <description>${data.message}</description>
+            </descriptiveAlertTemplate>
+        </document>`;
+};
+
+ATV.start({
+    templates: {
+        loader: loaderTemplate,
+        error: errorTpl
+    },
+    menu: {
+        attributes: {},
+        items: [{
+            id: 'home',
+            name: 'Home',
+            page: Home
+        }]
+    },
+    onLaunch(options) {
+        const apiKey = ATV.Settings.get('apiKey');
+        if (apiKey) {
+            ATV.Navigation.navigateToMenuPage();
+        } else {
+            // TODO handle auth process
+        }
+    }
+});
