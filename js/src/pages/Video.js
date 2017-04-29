@@ -7,6 +7,7 @@ const template = data => `
             <banner>
                 <heroImg src="${data.image}" />
                 <infoList>
+                    ${createInfoListItems(data.info)}
                 </infoList>
                 <stack>
                     <title>${data.title}</title>
@@ -28,7 +29,7 @@ const template = data => `
                 </header>
                 <section>
                     <lockup>
-                        <img src="${data.image}" width="150" height="226" />
+                        <img src="${data.image}" width="400" height="226" />
                         <title>Turn</title>
                     </lockup>
                 </section>
@@ -37,14 +38,14 @@ const template = data => `
     </document>
 `;
 
-const createInfoListItems = items => items.map(item => `
+const createInfoListItems = (items = []) => items.map(item => `
     <info>
         <header>
             <title>${item.name}</title>
         </header>
-        <text>${item.value}</title>
+        <text>${item.value}</text>
     </info>
-`);
+`).join('');
 
 const Page = ATV.Page.create({
     name: 'video',
@@ -60,16 +61,13 @@ const Page = ATV.Page.create({
                 };
 
 
-                const hours = Math.floor(result.length_seconds / 3600);
+                let hours = Math.floor(result.length_seconds / 3600);
                 let minutes = Math.floor(Math.floor(result.length_seconds % 3600) / 60);
                 let seconds = result.length_seconds % 60;
 
-                if (minutes < 10) {
-                    minutes = `0${minutes}`;
-                }
-                if (seconds < 10) {
-                    seconds = `0${seconds}`;
-                }
+                hours = hours == 0 ? '' : `${hours}:`;
+                minutes = `${minutes < 10 ? '0' : ''}${minutes}:`;
+                seconds = `${seconds < 10 ? '0' : ''}${seconds}`;
 
                 data.info = [
                     { name: "Runtime", value: `${hours}:${minutes}:${seconds}` },
@@ -81,18 +79,18 @@ const Page = ATV.Page.create({
                     data.image = result.image.screen_url;
                 }
 
-                if (result.video_categories && result.video_categories.length) {
-                    data.shows = result.video_categories.map(({ name, api_detail_url}) => ({
-                        name,
-                        url: api_detail_url
-                    }));
-                }
-
                 if (result.hd_url) {
                     data.video = result.hd_url;
                     data.isHD = true;
                 } else if (result.high_url) {
                     data.video = result.high_url;
+                }
+
+                if (result.video_categories && result.video_categories.length) {
+                    data.shows = result.video_categories.map(({ name, api_detail_url}) => ({
+                        name,
+                        url: api_detail_url
+                    }));
                 }
 
                 resolve(data);
