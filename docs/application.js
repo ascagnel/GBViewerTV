@@ -30741,6 +30741,7 @@ const ready = (options, resolve, reject) => {
                                 if (status === 'success') {
                                     clearInterval(intervalId);
                                     __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Settings.set(regCode);
+                                    __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Navigation.clear();
                                     __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Navigation.navigate('home');
                                 }
                             });
@@ -37782,7 +37783,7 @@ const errorTpl = (data) => {
     return `
         <document>
             <descriptiveAlertTemplate>
-                <title>${data.title}</title>
+                <title>Error on Loading: ${data.title}</title>
                 <description>${data.message}</description>
             </descriptiveAlertTemplate>
         </document>`;
