@@ -3,6 +3,8 @@ import ATV from 'atvjs';
 import Home from './pages/Home';
 import Loader from './pages/Loading';
 import Video from './pages/Video';
+import Login from './pages/Login';
+
 import { template as loaderTemplate } from './pages/Loading';
 
 const errorTpl = (data) => {
@@ -31,9 +33,9 @@ ATV.start({
     onLaunch(options) {
         const apiKey = ATV.Settings.get('apiKey');
         if (apiKey) {
-            ATV.Navigation.navigateToMenuPage();
+            ATV.Navigation.navigate('home');
         } else {
-            // TODO handle auth process
+            ATV.Navigation.navigate('login');
         }
     }
 });
