@@ -14,7 +14,7 @@ const template = data => `
                     <title>${data.title}</title>
                     <description>${data.subtitle}</description>
                     <row>
-                        <buttonLockup data-href-page="media" data-href-page-options='{ "mediaUrl": "${data.video}", "videoId": "${data.id}" }'>
+                        <buttonLockup data-href-page-options='{ "mediaUrl": "${data.video}", "videoId": "${data.id}" }'>
                             <badge src="resource://button-preview/" />
                             <title>Play</title>
                         </buttonLockup>
@@ -34,7 +34,6 @@ const createInfoListItems = ({ info = [] }) => info.map(item => {
     } else {
         const string = Object.keys(item).filter(key => (key !== 'type')).map(key => `${key}="${item[key]}"`).join(' ');
         value = `<${item.type} ${string} />`;
-        console.log('string', string);
     }
 
     return `
@@ -71,14 +70,18 @@ const Page = ATV.Page.create({
         const target = e.target;
         const page = target.getAttribute('data-href-page');
         const options = JSON.parse(target.getAttribute('data-href-page-options'));
-        console.log(options);
-        if (page === 'media') {
+        if (!page) {
             play({ url: options.mediaUrl, videoId: options.videoId });
             return;
         }
         return;
     },
     ready(options = {}, resolve, reject) {
+        if (!options.detailUrl || options.detailUrl == "null") {
+            play({ url: options.video });
+            resolve();
+            return;
+        }
         ATV.Ajax.get(prepareUrl(options.detailUrl))
             .then(response => {
                 const result = ATV._.get(response, 'response.results', {});
