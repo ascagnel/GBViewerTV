@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "build": "webpack",
+    "build": "webpack && cp ./dist/application.js ../docs/",
     "dev": "webpack --progress --colors --watch",
     "flow": "flow"
   },
