@@ -70,6 +70,7 @@ const getStreamingVideoPromise = () => {
             if (video) {
                 stream = video;
             }
+
             return { stream };
         });
 };

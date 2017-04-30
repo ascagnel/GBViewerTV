@@ -15,9 +15,10 @@ const template = data => `
                     <description>${data.subtitle}</description>
                     <row>
                         <buttonLockup data-href-page-options='{ "mediaUrl": "${data.video}", "videoId": "${data.id}" }'>
-                            <badge src="resource://button-preview/" />
+                            <badge src="resource://button-play/" />
                             <title>Play</title>
                         </buttonLockup>
+                        ${restartButton(data)}
                     </row>
                 </stack>
             </banner>
@@ -25,6 +26,18 @@ const template = data => `
         </productTemplate>
     </document>
 `;
+
+const restartButton = ({ video, id, hideRestart }) => {
+    if (hideRestart) {
+        return '';
+    }
+    return `
+        <buttonLockup data-href-page-options='{ "mediaUrl": "${video}", "videoId": "${id}", "restart": "false" }'>
+            <badge src="resource://button-preview/" />
+            <title>Restart</title>
+        </buttonLockup>
+    `
+};
 
 const createInfoListItems = ({ info = [] }) => info.map(item => {
     const header = item.name ? `<header><title>${item.name}</title></header>` : '';
@@ -70,8 +83,9 @@ const Page = ATV.Page.create({
         const target = e.target;
         const page = target.getAttribute('data-href-page');
         const options = JSON.parse(target.getAttribute('data-href-page-options'));
+        const resumeVideo = options.restart !== 'false';
         if (!page) {
-            play({ url: options.mediaUrl, videoId: options.videoId });
+            play({ url: options.mediaUrl, videoId: options.videoId, resumeVideo });
             return;
         }
         return;
@@ -135,7 +149,20 @@ const Page = ATV.Page.create({
                         type: 'video_show'
                     }));
                 }
-
+                return data;
+            })
+            .then(data => {
+                return ATV.Ajax.get(prepareUrl(`http://www.giantbomb.com/api/video/get-saved-time/?video_id=${data.id}`))
+                    .then(response => {
+                        data.savedTime = Math.floor(ATV._.get(response, 'response.savedTime', -1));
+                        if (data.savedTime < 0) {
+                            data.savedTime = 0;
+                            data.hideRestart = true;
+                        }
+                        return data;
+                    });
+            })
+            .then(data => {
                 if (data.categories || data.shows) {
                     const promises = [].concat(data.shows, data.categories)
                         .filter(item => !!item)

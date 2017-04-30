@@ -18,7 +18,7 @@ export const _play = (url, mediaType, resumeVideo, savedTime=0) => {
     const player = new Player();
     player.playlist = playlist;
 
-    if (savedTime > 0 || !resumeVideo) {
+    if (savedTime > 0 && resumeVideo) {
         player.seekToTime(savedTime);
     }
 
