@@ -30725,12 +30725,13 @@ const template = data => `
 
 const ready = (options, resolve, reject) => {
     const data = {};
-    __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Ajax.get(`https://www.giantbomb.com/app/gbviewertv/get-code?deviceID=gbviewertv`, { responseType: 'xml' })
+    const code = Device.vendorIdentifier;
+    __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Ajax.get(`https://www.giantbomb.com/app/gbviewertv/get-code?deviceID=${code}`, { responseType: 'xml' })
         .then(({ response }) => {
             __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_xml2js__["parseString"])(response, (err, result) => {
                 data.authCode = __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a._.get(result, 'result.regCode.0');
                 resolve(data);
-                const url = `http://www.giantbomb.com/app/gbviewertv/get-result?regCode=${data.authCode}&deviceID=gbviewertv`;
+                const url = `http://www.giantbomb.com/app/gbviewertv/get-result?regCode=${data.authCode}&deviceID=${code}`;
                 const intervalId = setInterval(() => {
                     __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Ajax.get(url, { responseType: 'xml' })
                         .then(response => {

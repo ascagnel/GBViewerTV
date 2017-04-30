@@ -17,12 +17,13 @@ const template = data => `
 
 const ready = (options, resolve, reject) => {
     const data = {};
-    ATV.Ajax.get(`https://www.giantbomb.com/app/gbviewertv/get-code?deviceID=gbviewertv`, { responseType: 'xml' })
+    const code = Device.vendorIdentifier;
+    ATV.Ajax.get(`https://www.giantbomb.com/app/gbviewertv/get-code?deviceID=${code}`, { responseType: 'xml' })
         .then(({ response }) => {
             parseString(response, (err, result) => {
                 data.authCode = ATV._.get(result, 'result.regCode.0');
                 resolve(data);
-                const url = `http://www.giantbomb.com/app/gbviewertv/get-result?regCode=${data.authCode}&deviceID=gbviewertv`;
+                const url = `http://www.giantbomb.com/app/gbviewertv/get-result?regCode=${data.authCode}&deviceID=${code}`;
                 const intervalId = setInterval(() => {
                     ATV.Ajax.get(url, { responseType: 'xml' })
                         .then(response => {
