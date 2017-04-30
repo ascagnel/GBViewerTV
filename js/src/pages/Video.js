@@ -11,9 +11,6 @@ const template = data => `
                 </infoList>
                 <stack>
                     <title>${data.title}</title>
-                    <row>
-                        <text>Some text here</text>
-                    </row>
                     <description>${data.subtitle}</description>
                     <row>
                         <buttonLockup>
@@ -28,14 +25,24 @@ const template = data => `
     </document>
 `;
 
-const createInfoListItems = ({ info = [] }) => info.map(item => `
-    <info>
-        <header>
-            <title>${item.name}</title>
-        </header>
-        <text>${item.value}</text>
-    </info>
-`).join('');
+const createInfoListItems = ({ info = [] }) => info.map(item => {
+    const header = item.name ? `<header><title>${item.name}</title></header>` : '';
+    let value;
+    if (!item.type) {
+        value = `<text>${item.value}</text>`;
+    } else {
+        const string = Object.keys(item).filter(key => (key !== 'type')).map(key => `${key}="${item[key]}"`).join(' ');
+        value = `<${item.type} ${string} />`;
+        console.log('string', string);
+    }
+
+    return `
+        <info>
+            ${header}
+            ${value}
+        </info>
+    `;
+}).join('');
 
 const createShelves = ({ shelves = [] }) => shelves.map(shelf => `
     <shelf>
@@ -65,6 +72,8 @@ const Page = ATV.Page.create({
                     title: result.name,
                     subtitle: result.deck,
                     video: result.low_url,
+                    info: [],
+                    row: [],
                     promises: [] // this gets used later for subsequent calls
                 };
 
@@ -76,12 +85,11 @@ const Page = ATV.Page.create({
                 minutes = `${minutes < 10 ? '0' : ''}${minutes}:`;
                 seconds = `${seconds < 10 ? '0' : ''}${seconds}`;
 
-                data.info = [
-                    { name: "Runtime", value: `${hours}${minutes}${seconds}` },
-                    { name: "Published", value: result.publish_date },
-                    { name: "Type", value: result.video_type },
-                    { name: "Posted By", value: result.user }
-                ]
+
+                data.info.push({ name: "Runtime", value: `${hours}${minutes}${seconds}` });
+                data.info.push({ name: "Published", value: result.publish_date.split(' ')[0] });
+                data.info.push({ name: "Type", value: result.video_type });
+                data.info.push({ name: "Posted By", value: result.user });
 
                 if (result.image) {
                     data.image = result.image.screen_url;
