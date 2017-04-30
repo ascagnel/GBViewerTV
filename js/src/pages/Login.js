@@ -33,6 +33,7 @@ const ready = (options, resolve, reject) => {
                                 if (status === 'success') {
                                     clearInterval(intervalId);
                                     ATV.Settings.set(regCode);
+                                    ATV.Navigation.clear();
                                     ATV.Navigation.navigate('home');
                                 }
                             });
