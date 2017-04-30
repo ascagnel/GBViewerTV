@@ -1,5 +1,6 @@
 import ATV from 'atvjs';
 import { prepareUrl, getPath } from '../common/fetch';
+import play from '../common/play';
 
 const template = data => `
     <document>
@@ -13,7 +14,7 @@ const template = data => `
                     <title>${data.title}</title>
                     <description>${data.subtitle}</description>
                     <row>
-                        <buttonLockup>
+                        <buttonLockup data-href-page="media" data-href-page-options='{ "mediaUrl": "${data.video}" }'>
                             <badge src="resource://button-preview/" />
                             <title>Play</title>
                         </buttonLockup>
@@ -63,6 +64,19 @@ const createShelves = ({ shelves = [] }) => shelves.map(shelf => `
 const Page = ATV.Page.create({
     name: 'video',
     template: template,
+    events: {
+        select: 'onSelect'
+    },
+    onSelect(e) {
+        const target = e.target;
+        const page = target.getAttribute('data-href-page');
+        const options = JSON.parse(target.getAttribute('data-href-page-options'));
+        if (page === 'media') {
+            play(options.mediaUrl);
+            return;
+        }
+        return;
+    },
     ready(options = {}, resolve, reject) {
         ATV.Ajax.get(prepareUrl(options.detailUrl))
             .then(response => {
