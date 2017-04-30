@@ -11,7 +11,7 @@ const errorTpl = (data) => {
     return `
         <document>
             <descriptiveAlertTemplate>
-                <title>${data.title}</title>
+                <title>Error on Loading: ${data.title}</title>
                 <description>${data.message}</description>
             </descriptiveAlertTemplate>
         </document>`;
