@@ -5,7 +5,7 @@ export const getPath = resource => {
     return `https://www.giantbomb.com/api/${resource}?api_key=${apiKey}&format=json`;
 };
 
-export const prepareUrl = input => {
+export const prepareUrl = (input, options = {}) => {
     if (input.indexOf('?') === -1 && input.indexOf('apiKey=') === -1) {
         input = `${input}?api_key=${ATV.Settings.get('apiKey')}`;
     }
@@ -14,8 +14,10 @@ export const prepareUrl = input => {
         input = `${input}&api_key=${ATV.Settings.get('apiKey')}`;
     }
 
-    if (input.indexOf('format=') === -1) {
-        input = `${input}&format=json`;
+    if (!options.skipFormat) {
+        if (input.indexOf('format=') === -1) {
+            input = `${input}&format=json`;
+        }
     }
 
     return input;

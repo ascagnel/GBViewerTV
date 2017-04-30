@@ -14,7 +14,7 @@ const template = data => `
                     <title>${data.title}</title>
                     <description>${data.subtitle}</description>
                     <row>
-                        <buttonLockup data-href-page="media" data-href-page-options='{ "mediaUrl": "${data.video}" }'>
+                        <buttonLockup data-href-page="media" data-href-page-options='{ "mediaUrl": "${data.video}", "videoId": "${data.id}" }'>
                             <badge src="resource://button-preview/" />
                             <title>Play</title>
                         </buttonLockup>
@@ -71,8 +71,9 @@ const Page = ATV.Page.create({
         const target = e.target;
         const page = target.getAttribute('data-href-page');
         const options = JSON.parse(target.getAttribute('data-href-page-options'));
+        console.log(options);
         if (page === 'media') {
-            play(options.mediaUrl);
+            play({ url: options.mediaUrl, videoId: options.videoId });
             return;
         }
         return;
