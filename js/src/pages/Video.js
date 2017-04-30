@@ -106,6 +106,7 @@ const Page = ATV.Page.create({
                     video: result.low_url,
                     info: [],
                     row: [],
+                    length: Math.floor(result.length_seconds),
                     promises: [] // this gets used later for subsequent calls
                 };
 
