@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "tv",
+      "filename" : "gb-logo-large.png",
       "scale" : "1x"
     }
   ],
