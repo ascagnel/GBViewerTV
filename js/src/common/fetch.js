@@ -2,7 +2,8 @@ import ATV from 'atvjs';
 
 export const getPath = resource => {
     const apiKey = ATV.Settings.get('apiKey');
-    return `https://www.giantbomb.com/api/${resource}?api_key=${apiKey}&format=json`;
+    const leader = resource[0] === '/' ? '' : '/';
+    return `https://www.giantbomb.com/api${leader}${resource}?api_key=${apiKey}&format=json`;
 };
 
 export const prepareUrl = (input, options = {}) => {

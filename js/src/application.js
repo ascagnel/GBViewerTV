@@ -6,7 +6,6 @@ import Video from './pages/Video';
 import { template as loaderTemplate } from './pages/Loading';
 
 const errorTpl = (data) => {
-    console.log('errorTpl data', data);
     return `
         <document>
             <descriptiveAlertTemplate>

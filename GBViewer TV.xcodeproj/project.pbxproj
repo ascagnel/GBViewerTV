@@ -485,6 +485,7 @@
 				69B96AFF1EAEDE6B0016EC85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		69B96B001EAEDE6B0016EC85 /* Build configuration list for PBXNativeTarget "GBViewer TVTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +494,7 @@
 				69B96B021EAEDE6B0016EC85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		69B96B031EAEDE6B0016EC85 /* Build configuration list for PBXNativeTarget "GBViewer TVUITests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +503,7 @@
 				69B96B051EAEDE6B0016EC85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -153,7 +153,7 @@ const Page = ATV.Page.create({
                 return data;
             })
             .then(data => {
-                return ATV.Ajax.get(prepareUrl(`http://www.giantbomb.com/api/video/get-saved-time/?video_id=${data.id}`))
+                return ATV.Ajax.get(prepareUrl(`${getPath('video/get-saved-time/')}&video_id=${data.id}`))
                     .then(response => {
                         data.savedTime = Math.floor(ATV._.get(response, 'response.savedTime', -1));
                         if (data.savedTime < 0) {
