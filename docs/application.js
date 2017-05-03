@@ -30741,7 +30741,7 @@ const ready = (options, resolve, reject) => {
 
                                 if (status === 'success') {
                                     clearInterval(intervalId);
-                                    __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Settings.set(regCode);
+                                    __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Settings.set('apiKey', regCode);
                                     __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Navigation.clear();
                                     __WEBPACK_IMPORTED_MODULE_0_atvjs___default.a.Navigation.navigate('home');
                                 }
