@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     
     // To run locally, from a terminal, `cd` into the `./js` directory and run `yarn start`
 
-    //static let tvBaseURL = "https://raw.githubusercontent.com/ascagnel/GBViewerTV/master/docs/"
-    static let tvBaseURL = "http://localhost:9001"
+    static let tvBaseURL = "https://raw.githubusercontent.com/ascagnel/GBViewerTV/master/docs/"
+    //static let tvBaseURL = "http://localhost:9001"
     static let tvBootURL = "\(AppDelegate.tvBaseURL)/application.js"
     
     // MARK: Javascript Execution Helper
