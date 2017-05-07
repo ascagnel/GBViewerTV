@@ -7,5 +7,5 @@ app.use('/', express.static(`${__dirname}/dist`));
 app.get('*', (req, res)=> res.redirect('/'));
 
 app.listen(port, ()=> {
-    console.log(`Rollup Sample listening on port ${port}`);
+    console.log(`Development version of GBTV being served from port ${port}`);
 });

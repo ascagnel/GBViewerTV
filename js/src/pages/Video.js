@@ -1,6 +1,8 @@
 import ATV from 'atvjs';
 import { prepareUrl, getPath } from '../common/fetch';
+import escape from 'escape-html';
 import play from '../common/play';
+import VideoTile from '../Views/Video';
 
 const template = data => `
     <document>
@@ -62,14 +64,9 @@ const createShelves = ({ shelves = [] }) => shelves.map(shelf => `
         <header>
             <title>${shelf.name}</title>
         </header>
-        ${shelf.videos.map(video => `
-            <section>
-                <lockup data-href-page="video" data-href-page-options='{ "detailUrl": "${video.url}" }'>
-                    <img src="${video.image}" width="340" height="192" />
-                    <title>${video.name}</title>
-                </lockup>
-            </section>
-        `).join('')}
+        <section>
+            ${shelf.videos.map(VideoTile).join('')}
+        </section>
     </shelf>
 `).join('');
 
@@ -101,8 +98,8 @@ const Page = ATV.Page.create({
                 const result = ATV._.get(response, 'response.results', {});
                 const data = {
                     id: result.id,
-                    title: result.name,
-                    subtitle: result.deck,
+                    title: escape(result.name),
+                    subtitle: escape(result.deck),
                     video: result.low_url,
                     info: [],
                     row: [],
@@ -137,7 +134,7 @@ const Page = ATV.Page.create({
 
                 if (result.video_categories && result.video_categories.length) {
                     data.categories = result.video_categories.map(({ name, id }) => ({
-                        name,
+                        name: escape(name),
                         id,
                         type: 'video_categories'
                     }));
@@ -145,7 +142,7 @@ const Page = ATV.Page.create({
 
                 if (result.video_shows) {
                     data.shows = result.video_shows.map(({ name, id }) => ({
-                        name,
+                        name: escape(name),
                         id,
                         type: 'video_show'
                     }));
@@ -178,6 +175,7 @@ const Page = ATV.Page.create({
                 }
             })
             .catch(e => {
+                console.log('e', e);
                 reject(e);
             });
     }
