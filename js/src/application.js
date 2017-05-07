@@ -4,6 +4,10 @@ import Home from './pages/Home';
 import Loader from './pages/Loading';
 import Video from './pages/Video';
 import Login from './pages/Login';
+import Show from './pages/Show';
+import Shows from './pages/Shows';
+
+import { prepareUrl, getPath } from './common/fetch';
 
 import { template as loaderTemplate } from './pages/Loading';
 
@@ -17,6 +21,27 @@ const errorTpl = (data) => {
         </document>`;
 };
 
+let menuItems = [{
+    id: 'live',
+    name: 'Live!',
+    page: null
+}, {
+    id: 'home',
+    name: 'Latest',
+    page: Home,
+    attributes: {
+        autoHighlight: true
+    }
+}, {
+    id: 'shows',
+    name: 'Shows',
+    page: Shows
+}, {
+    id: 'games',
+    name: 'Games',
+    page: null
+}];
+
 ATV.start({
     templates: {
         loader: loaderTemplate,
@@ -24,16 +49,12 @@ ATV.start({
     },
     menu: {
         attributes: {},
-        items: [{
-            id: 'home',
-            name: 'Home',
-            page: Home
-        }]
+        items: menuItems
     },
-    onLaunch(options) {
+    onLaunch(options, resolve, reject) {
         const apiKey = ATV.Settings.get('apiKey');
         if (apiKey) {
-            ATV.Navigation.navigate('home');
+            ATV.Navigation.navigateToMenuPage();
         } else {
             ATV.Navigation.navigate('login');
         }

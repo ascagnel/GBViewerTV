@@ -17,7 +17,7 @@ const template = data => `
                     <title>${data.title}</title>
                     <description>${data.subtitle}</description>
                     <row>
-                        <buttonLockup data-href-page-options='{ "mediaUrl": "${data.video}", "videoId": "${data.id}" }'>
+                        <buttonLockup data-href-page-options='{ "mediaUrl": "${data.video}", "videoId": "${data.id}", "title": "${data.title}", "description": "${data.subtitle}", "image": "${data.image}" }'>
                             <badge src="resource://button-play/" />
                             <title>Play</title>
                         </buttonLockup>
@@ -30,12 +30,12 @@ const template = data => `
     </document>
 `;
 
-const restartButton = ({ video, id, hideRestart }) => {
+const restartButton = ({ video, id, hideRestart, title, subtitle, image }) => {
     if (hideRestart) {
         return '';
     }
     return `
-        <buttonLockup data-href-page-options='{ "mediaUrl": "${video}", "videoId": "${id}", "restart": "false" }'>
+        <buttonLockup data-href-page-options='{ "mediaUrl": "${video}", "videoId": "${id}", "restart": "false", "title": "${title}", "description": "${subtitle}", "image": "${image}" }'>
             <badge src="resource://button-preview/" />
             <title>Restart</title>
         </buttonLockup>
@@ -83,7 +83,14 @@ const Page = ATV.Page.create({
         const options = JSON.parse(target.getAttribute('data-href-page-options'));
         const resumeVideo = options.restart !== 'false';
         if (!page) {
-            play({ url: options.mediaUrl, videoId: options.videoId, resumeVideo });
+            play({
+                url: options.mediaUrl,
+                videoId: options.videoId,
+                resumeVideo,
+                title: options.title,
+                desciption: options.description,
+                image: options.image
+            });
             return;
         }
         return;
