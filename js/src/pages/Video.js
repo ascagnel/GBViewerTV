@@ -155,7 +155,6 @@ const Page = ATV.Page.create({
         ])
             .then(responses => {
                 const { savedTimes, data } = responses.reduce((prev, curr) => Object.assign({}, prev, curr), {});
-                console.log(data, savedTimes);
                 data.savedTime = ATV._.get(savedTimes, `${data.id}.savedTime`, 0);
                 if (data.savedTime < 0) {
                     data.savedTime = 0;
