@@ -2,7 +2,7 @@ const path = require('path');
 const dist = process.env.DIST === 'true';
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-console.log(`building in ${dist ? 'non-' : ''}development mode.`);
+console.log(`Building in ${dist ? '': 'non-'}production mode...`);
 
 const config = {
     entry: path.resolve(__dirname, './src/application.js'),

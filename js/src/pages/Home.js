@@ -26,7 +26,7 @@ export const template = data => `
 
 export const name = 'home';
 
-const getLatestVideosPromise = () => {
+export const ready = (options, resolve, reject) => {
     return Promise.all([
         GetAllProgressPromise,
         ATV.Ajax.get(`${getPath('videos')}&limit=60`)
@@ -59,39 +59,7 @@ const getLatestVideosPromise = () => {
                 return item;
             });
 
-            return { latest };
-        });
-};
-
-const getStreamingVideoPromise = () => {
-    return ATV.Ajax.get(getPath('video/current-live/'))
-        .then(response => {
-            const video = ATV._.get(response, 'response.video');
-            let stream = null;
-
-            if (video) {
-                stream = video;
-            }
-
-            return { stream };
-        });
-};
-
-export const ready = (options, resolve, reject) => {
-    Promise.all([getLatestVideosPromise()])
-        .then(all => {
-            const results = all.reduce((prev, curr) => Object.assign({}, prev, curr), {});
-            if (results.stream) {
-                results.latest.splice(-1);
-                const livestream = {
-                    name: `Live Now! ${results.stream.title}`,
-                    image: results.stream.image,
-                    video: results.stream.stream,
-                    detailUrl: null
-                };
-                results.latest = [].concat([livestream], results.latest);
-            }
-            resolve(results);
+            resolve({ latest });
         });
 };
 
