@@ -14,8 +14,8 @@ const template = data => `
                     ${createInfoListItems(data)}
                 </infoList>
                 <stack>
-                    <title>${data.title}</title>
-                    <description>${data.subtitle}</description>
+                    <title>${escape(data.title)}</title>
+                    <description>${escape(data.subtitle)}</description>
                     <row>
                         <buttonLockup data-href-page-options='{ "mediaUrl": "${data.video}", "videoId": "${data.id}", "title": "${data.title}", "description": "${data.subtitle}", "image": "${data.image}" }'>
                             <badge src="resource://button-play/" />
@@ -43,10 +43,10 @@ const restartButton = ({ video, id, hideRestart, title, subtitle, image }) => {
 };
 
 const createInfoListItems = ({ info = [] }) => info.map(item => {
-    const header = item.name ? `<header><title>${item.name}</title></header>` : '';
+    const header = item.name ? `<header><title>${escape(item.name)}</title></header>` : '';
     let value;
     if (!item.type) {
-        value = `<text>${item.value}</text>`;
+        value = `<text>${escape(item.value)}</text>`;
     } else {
         const string = Object.keys(item).filter(key => (key !== 'type')).map(key => `${key}="${item[key]}"`).join(' ');
         value = `<${item.type} ${string} />`;
@@ -63,7 +63,7 @@ const createInfoListItems = ({ info = [] }) => info.map(item => {
 const createShelves = ({ shelves = [] }) => shelves.map(shelf => `
     <shelf>
         <header>
-            <title>${shelf.name}</title>
+            <title>${escape(shelf.name)}</title>
         </header>
         <section>
             ${shelf.videos.map(VideoTile).join('')}
@@ -108,8 +108,8 @@ const Page = ATV.Page.create({
                     const result = ATV._.get(response, 'response.results', {});
                     const data = {
                         id: result.id,
-                        title: escape(result.name),
-                        subtitle: escape(result.deck),
+                        title: result.name,
+                        subtitle: result.deck,
                         video: result.low_url,
                         info: [],
                         row: [],
@@ -144,7 +144,7 @@ const Page = ATV.Page.create({
 
                     if (result.video_categories && result.video_categories.length) {
                         data.categories = result.video_categories.map(({ name, id }) => ({
-                            name: escape(name),
+                            name: name,
                             id,
                             type: 'video_categories'
                         }));
@@ -152,7 +152,7 @@ const Page = ATV.Page.create({
 
                     if (result.video_shows) {
                         data.shows = result.video_shows.map(({ name, id }) => ({
-                            name: escape(name),
+                            name: name,
                             id,
                             type: 'video_show'
                         }));

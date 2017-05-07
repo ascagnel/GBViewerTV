@@ -1,5 +1,4 @@
 import ATV from 'atvjs';
-import escape from 'escape-html';
 import { getPath, prepareUrl } from '../common/fetch';
 import GetAllProgressPromise from '../common/GetAllProgress';
 import Video from '../Views/Video';
@@ -39,8 +38,8 @@ export const ready = (options, resolve, reject) => {
                 const item = {
                     id: result.id,
                     detailUrl: ATV._.get(result, 'api_detail_url'),
-                    name: escape(result.name),
-                    description: escape(result.deck),
+                    name: result.name,
+                    description: result.deck,
                     image: ATV._.get(result, 'image.screen_url')
                 };
 

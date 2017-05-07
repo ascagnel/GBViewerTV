@@ -26,7 +26,7 @@ export const _streamWithImage = data => `
         <menuBar>
             <section>
                 <menuItem data-href-page-options='${JSON.stringify(data)}'>
-                    <title>Live Now: ${data.title}</title>
+                    <title>Live Now: ${escape(data.title)}</title>
                 </menuItem>
             </section>
         </menuBar>
@@ -37,7 +37,7 @@ export const _streamWithImage = data => `
 export const _streamWithoutImage = data => `
 <document>
     <alertTemplate>
-        <title>${data.title}</title>
+        <title>Live Now: ${escape(data.title)}</title>
         <button data-href-page-options='${JSON.stringify(data)}'>
             <text>Play</text>
         </button>
@@ -63,7 +63,7 @@ export const ready = (options, resolve, reject) => {
             const data = {};
 
             if (video) {
-                data.title = escape(video.title);
+                data.title = video.title;
                 data.image = video.image;
                 data.video = video.stream;
             }
