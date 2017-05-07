@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Show from './pages/Show';
 import Shows from './pages/Shows';
 import Live from './pages/Live';
+import Games from './pages/Games';
 
 import { prepareUrl, getPath } from './common/fetch';
 
@@ -37,11 +38,14 @@ let menuItems = [{
     id: 'shows',
     name: 'Shows',
     page: Shows
-}, {
+}];
+/*
+, {
     id: 'games',
     name: 'Games',
-    page: null
+    page: Games
 }];
+*/
 
 ATV.start({
     templates: {
