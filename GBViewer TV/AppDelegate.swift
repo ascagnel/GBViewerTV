@@ -15,8 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     var window: UIWindow?
     var appController: TVApplicationController?
     
-    // tvBaseURL points to a server on your local machine. To create a local server for testing purposes, use the following command inside your project folder from the Terminal app: ruby -run -ehttpd . -p9001. See NSAppTransportSecurity for information on using a non-secure server.
-    static let tvBaseURL = "https://raw.githubusercontent.com/ascagnel/GBViewerTV/master/docs/"
+    // tvBaseURL points to the server hosting the application bundle file.  For production, this
+    // should be a githubusercontent URL.  For development, this should be your local machine.
+    
+    // To run locally, from a terminal, `cd` into the `./js` directory and run `yarn start`
+
+    //static let tvBaseURL = "https://raw.githubusercontent.com/ascagnel/GBViewerTV/master/docs/"
+    static let tvBaseURL = "http://localhost:9001"
     static let tvBootURL = "\(AppDelegate.tvBaseURL)/application.js"
     
     // MARK: Javascript Execution Helper

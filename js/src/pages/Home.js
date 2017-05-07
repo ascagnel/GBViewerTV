@@ -29,7 +29,7 @@ export const name = 'home';
 const getLatestVideosPromise = () => {
     return Promise.all([
         GetAllProgressPromise,
-        ATV.Ajax.get(`${getPath('videos')}&limit=16`)
+        ATV.Ajax.get(`${getPath('videos')}&limit=60`)
             .then(response => ({ latest: ATV._.get(response, 'response.results', []) })),
     ])
         .then(responses => {
@@ -78,7 +78,7 @@ const getStreamingVideoPromise = () => {
 };
 
 export const ready = (options, resolve, reject) => {
-    Promise.all([getLatestVideosPromise(), getStreamingVideoPromise()])
+    Promise.all([getLatestVideosPromise()])
         .then(all => {
             const results = all.reduce((prev, curr) => Object.assign({}, prev, curr), {});
             if (results.stream) {

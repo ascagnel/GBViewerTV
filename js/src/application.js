@@ -6,6 +6,7 @@ import Video from './pages/Video';
 import Login from './pages/Login';
 import Show from './pages/Show';
 import Shows from './pages/Shows';
+import Live from './pages/Live';
 
 import { prepareUrl, getPath } from './common/fetch';
 
@@ -24,7 +25,7 @@ const errorTpl = (data) => {
 let menuItems = [{
     id: 'live',
     name: 'Live!',
-    page: null
+    page: Live
 }, {
     id: 'home',
     name: 'Latest',

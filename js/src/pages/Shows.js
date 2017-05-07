@@ -1,4 +1,5 @@
 import ATV from 'atvjs';
+import escape from 'escape-html';
 import Video from '../Views/Video';
 import GetAllProgressPromise from '../common/GetAllProgress';
 import { getPath, prepareUrl } from '../common/fetch';
@@ -21,7 +22,7 @@ export const template = data => `
 const Show = showData => `
 <lockup data-href-page="show" data-href-page-options='{ "detailUrl": "${showData.detailUrl}", "id": "${showData.id}" }'>
     <img src="${showData.image}" />
-    <title>${showData.title}</title>
+    <title>${escape(showData.title)}</title>
 </lockup>
 `;
 
