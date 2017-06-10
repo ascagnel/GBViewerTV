@@ -1,8 +1,4 @@
 const path = require('path');
-const dist = process.env.DIST === 'true';
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-
-console.log(`Building in ${dist ? '': 'non-'}production mode...`);
 
 const config = {
     entry: path.resolve(__dirname, './js/application.js'),
@@ -24,13 +20,5 @@ const config = {
     },
     plugins: []
 };
-
-/*
-if (dist) {
-    config.plugins.push(new UglifyJSPlugin({
-        compress: true
-    }));
-}
-*/
 
 module.exports = config;

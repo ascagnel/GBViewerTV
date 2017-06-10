@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js & yarn run dev",
-    "package-js": "DIST=true webpack && git add ./docs/application.js",
+    "package-js": "webpack -p && git add ./docs/application.js",
     "dev": "webpack --progress --colors --watch",
     "flow": "flow",
     "lint": "jshint .",
