@@ -16,12 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     var appController: TVApplicationController?
     
     // tvBaseURL points to the server hosting the application bundle file.  For production, this
-    // should be a githubusercontent URL.  For development, this should be your local machine.
+    // should be a github pages URL.  For development, this should be your local machine (dev).
     
     // To run locally, from a terminal, `cd` into the `./js` directory and run `yarn start`
 
-    static let tvBaseURL = "https://raw.githubusercontent.com/ascagnel/GBViewerTV/master/docs/"
-    //static let tvBaseURL = "http://localhost:9001"
+    static let tvBaseURL = "https://ascagnel.github.io/GBViewerTV/application.js"
+    static let tvBaseURLDev = "http://localhost:9001"
     static let tvBootURL = "\(AppDelegate.tvBaseURL)/application.js"
     
     // MARK: Javascript Execution Helper

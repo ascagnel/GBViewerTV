@@ -7,9 +7,11 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js & yarn run dev",
-    "package-js": "DIST=true webpack && cd .. && cp ./js/dist/application.js ./docs/ && git add ./docs/application.js & cd -",
+    "package-js": "DIST=true webpack && git add ./docs/application.js",
     "dev": "webpack --progress --colors --watch",
-    "flow": "flow"
+    "flow": "flow",
+    "lint": "jshint .",
+    "validate": "npm ls"
   },
   "dependencies": {
     "atvjs": "^0.2.5",

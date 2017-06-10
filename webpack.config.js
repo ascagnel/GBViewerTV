@@ -5,10 +5,10 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 console.log(`Building in ${dist ? '': 'non-'}production mode...`);
 
 const config = {
-    entry: path.resolve(__dirname, './src/application.js'),
+    entry: path.resolve(__dirname, './js/application.js'),
     output: {
         filename: 'application.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'docs')
     },
     module: {
         rules: [{
@@ -25,10 +25,12 @@ const config = {
     plugins: []
 };
 
+/*
 if (dist) {
     config.plugins.push(new UglifyJSPlugin({
         compress: true
     }));
 }
+*/
 
 module.exports = config;
